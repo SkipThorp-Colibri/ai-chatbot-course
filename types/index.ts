@@ -9,4 +9,9 @@ export interface Message {
   createdAt: Date;
   text: string;
 }
+export interface ApiMessage {
+  role: string;
+  content: string;
+}
+
 export type AsyncState = null | "loading" | "error" | "complete";
