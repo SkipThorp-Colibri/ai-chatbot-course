@@ -31,7 +31,7 @@ async function handleNewMessage(message: Message) {
     return messages.value.map((m) => ({
       role: m.userId,
       content: m.text,
-    })).slice(-10);
+    })).slice(-50);
   });
 
   const res = await $fetch("/api/ai", {
@@ -53,7 +53,6 @@ async function handleNewMessage(message: Message) {
   messages.value.push(msg);
   usersTyping.value = [];
 
-  console.log("messagesForApi array:", messagesForApi.value);
 }
 </script>
 <template>
