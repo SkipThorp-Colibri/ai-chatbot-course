@@ -38,7 +38,7 @@ async function handleNewMessage(message: Message) {
     }));
   });
   //   if(!messagesForApi.value) return;
-  console.log("messagesForApi array:", messagesForApi.value);
+  // console.log("messagesForApi array:", messagesForApi.value);
 
   const res = await $fetch("/api/ai", {
     method: "POST",
