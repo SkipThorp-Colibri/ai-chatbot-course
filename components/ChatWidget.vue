@@ -16,7 +16,6 @@ const bot = ref<User>({
 const users = computed(() => [me.value, bot.value]);
 
 const messages: Ref<Message[]> = ref([]);
-// const messages = ref<Message[]> = ref([]);
 
 const usersTyping = ref<User[]>([]);
 
@@ -25,20 +24,15 @@ const usersTyping = ref<User[]>([]);
 
 async function handleNewMessage(message: Message) {
   messages.value.push(message);
-  // console.log("messages array:", messages.value);
 
   usersTyping.value.push(bot.value);
-  // console.log("usersTyping array:", usersTyping.value);
 
-  
   const messagesForApi = computed<ApiMessage[]>(() => {
     return messages.value.map((m) => ({
       role: m.userId,
       content: m.text,
-    }));
+    })).slice(-10);
   });
-  //   if(!messagesForApi.value) return;
-  // console.log("messagesForApi array:", messagesForApi.value);
 
   const res = await $fetch("/api/ai", {
     method: "POST",
@@ -46,7 +40,6 @@ async function handleNewMessage(message: Message) {
       messages: messagesForApi.value,
     }
   })
-  // console.log("response from Chat API:", res);
 
   if(!res.choices[0].message?.content) return;
   
@@ -56,7 +49,6 @@ async function handleNewMessage(message: Message) {
     createdAt: new Date(),
     text: res.choices[0].message?.content,
   }
-  // console.log("message from Chat API:", msg);
 
   messages.value.push(msg);
   usersTyping.value = [];
