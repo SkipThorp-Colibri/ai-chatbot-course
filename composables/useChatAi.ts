@@ -6,16 +6,16 @@ import type { Agent } from "@/agents";
 import type { AsyncState } from "@/types";
 
 // if using openai v4 use the following import instead:
-// import type OpenAI from "openai";
-import type { CreateChatCompletionResponse } from "openai";
+import type OpenAI from "openai";
+// import type { CreateChatCompletionResponse } from "openai";
 
 export const useChatAi = ({ agent }: { agent: Agent }) => {
   const state = ref<AsyncState>(null);
   const error = ref();
 
   // if using openai v4, define the ref as the following type instead
-  // const res = ref<OpenAI.Chat.Completions.ChatCompletion>();
-  const res = ref<CreateChatCompletionResponse>();
+  const res = ref<OpenAI.Chat.Completions.ChatCompletion>();
+  // const res = ref<CreateChatCompletionResponse>();
 
   const usage = computed(() => res.value?.usage);
   const choices = computed(() => res.value?.choices || []);
@@ -28,8 +28,8 @@ export const useChatAi = ({ agent }: { agent: Agent }) => {
       state.value = "loading";
 
       // if using openai v4, the fetch response should be the following type instead
-      // const result = await fetchWithTimeout<OpenAI.Chat.Completions.ChatCompletion>(
-      const result = await fetchWithTimeout<CreateChatCompletionResponse>(
+      const result = await fetchWithTimeout<OpenAI.Chat.Completions.ChatCompletion>(
+      // const result = await fetchWithTimeout<CreateChatCompletionResponse>(
         `/api/ai`,
         {
           method: "POST",
